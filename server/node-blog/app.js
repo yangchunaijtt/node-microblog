@@ -20,3 +20,5 @@ app.get('/news', function (req, res) {
 })
 
 console.log('server in localhost:3000');
+
+// 需要配置 cross-env  nodemon
