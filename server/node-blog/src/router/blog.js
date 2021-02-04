@@ -8,10 +8,13 @@ const {
     addBlog
 } = require('../controller/blog');
 
+// details
+
 const handBlogServer = (req, res) => {
     const routerAllUrl = req.url;
+    const routeMethod = req.method;
     const routeUrl = routerAllUrl.split('?')[0];
-    console.log(routeUrl);
+    console.log(routeUrl,routeMethod,routerAllUrl,req.body);
     if (routeUrl === '/api/blog/getList') {
         const params = url.parse(req.url, true).query;
         getBlogList({
