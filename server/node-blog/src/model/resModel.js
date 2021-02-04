@@ -2,22 +2,14 @@
 // 公用信息的基类
 class resultModel {
     constructor(data, message) {
-        if (message) {
-            this.message = message;
-        } else {
-            this.message = null;
-        }
-        if (data) {
-            this.data = data;
-        } else {
-            this.data = null;
-        }
+        message ? this.message = message : this.message = null;
+        data ? this.data = data : this.data = null;
     }
 }
 
 // 成功
 class successModel extends resultModel {
-    constructor({data, message}) {
+    constructor({ data, message }) {
         super(data, message);
         this.IsSuccess = true;
         this.errorno = 0;
@@ -26,7 +18,7 @@ class successModel extends resultModel {
 
 // 失败
 class errorModel extends resultModel {
-    constructor({data, message}) {
+    constructor({ data, message }) {
         super(data, message);
         this.IsSuccess = false;
         this.errorno = 1;
