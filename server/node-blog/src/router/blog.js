@@ -14,10 +14,14 @@ const handBlogServer = (req, res) => {
     console.log(routeUrl);
     if (routeUrl === '/api/blog/getList') {
         const params = url.parse(req.url, true).query;
-        res.end(JSON.stringify(getBlogList({
+        getBlogList({
             author: params.author ? params.author : '',
             keyword: params.keyword ? params.keyword : ''
-        })))
+        }).then(result => {
+            res.end(JSON.stringify(result))
+        }).catch(error => {
+            res.end(JSON.stringify(error))
+        })
     }
 
     // post 请求部分

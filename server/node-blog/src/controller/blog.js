@@ -1,14 +1,22 @@
 // 处理后台接口数据的地方
 const { successModel, errorModel } = require('../model/resModel');
-
+const mysqlFnc = require('../db/mysql');
 /**
  * 获取
  * @param {*} author 作者
  * @param {*} keyWord 关键字
  */
 const getBlogList = ({ author, keyWord }) => {
-    return new successModel({
-        message: 'getBlogList'
+    return new Promise((resolve, reject) => {
+        mysqlFnc().then(result => {
+            resolve(new successModel({
+                data: result
+            }));
+        }).catch(error => {
+            reject(new errorModel({
+                data: error
+            })) 
+        })
     })
 
 }

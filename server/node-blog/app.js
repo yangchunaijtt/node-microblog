@@ -5,7 +5,7 @@ const handleUserServer = require('./src/router/user');
 
 
 //注册web服务
-http.createServer(app).listen(3000);
+http.createServer(app).listen(8000);
 
 //博客
 app.get('/api/blog/getList', function (req, res) {
@@ -32,6 +32,6 @@ app.post('/api/user/login', function (req, res) {
 })
 
 
-console.log('server in localhost:3000');
+console.log('server in localhost:8000');
 
 // 需要配置 cross-env  nodemon
