@@ -8,7 +8,6 @@ const { successModel, errorModel } = require('../model/resModel');
  */
 const getBlogList = ({ author, keyWord }) => {
     return new successModel({
-        data: {},
         message: 'getBlogList'
     })
 
@@ -17,7 +16,6 @@ const getBlogList = ({ author, keyWord }) => {
 // 更新 
 const updateBlog = ({ id, title, content, createtime }) => {
     return new successModel({
-        data:{},
         message: 'updateBlog'
     })
 };
@@ -25,7 +23,6 @@ const updateBlog = ({ id, title, content, createtime }) => {
 // 删除
 const deleteBlog = ({ id }) => {
     return new successModel({
-        data: {},
         message: 'deleteBlog'
     })
 }
@@ -33,7 +30,6 @@ const deleteBlog = ({ id }) => {
 // 新增
 const addBlog = ({ id, titile, content, createtime }) => {
     return new successModel({
-        data: {},
         message: 'addBlog'
     })
 }

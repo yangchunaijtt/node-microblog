@@ -1,7 +1,7 @@
 // 设置通用的返回信息
 // 公用信息的基类
 class resultModel {
-    constructor({data, message}) {
+    constructor(data, message) {
         if (message) {
             this.message = message;
         } else {
