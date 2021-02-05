@@ -11,34 +11,37 @@
             :toolbarsFlag="false"
             :subfield="false"/>
       </div>
-      <comment></comment>
     </div>
   </div>
 </template>
 
 <script>
-  import Comment from '@/components/Comment.vue'
+  
   export default {
     data() {
       return {
         blogDetail:{}
       }
     },
-    components:{
-      Comment
-    },
     methods:{
       getDetail() {
-        this.$axios.get('/api/article/detail',{
-          params:{
-            article_id:this.$route.params.id
+        this.$axios
+        .get("/api/blog/details", {
+          params: {
+            id: this.$route.params.id,
+          },
+        })
+        .then((res) => {
+          res = res.data;
+          if (res.IsSuccess) {
+            this.blogDetail = res.data[0];
+            this.blogDetailcreatetime = this.$moment(
+              parseInt(this.blogDetail.createtime)
+            ).format("YYYY-MM-DD HH:SS");
           }
-        }).then(res => {
-            if(res.data.code === 0){
-                this.blogDetail = res.data.data
-            }
-          }).catch(e=>{
-              console.log(e)
+        })
+        .catch((e) => {
+          console.log(e);
         })
       }
     },

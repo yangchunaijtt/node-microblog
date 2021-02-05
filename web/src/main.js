@@ -12,6 +12,9 @@ import '@/assets/font/iconfont.css'
 import '@/assets/scss/common.scss'
 import setAxios from './setAxios'
 import Cookie from 'js-cookie'
+import moment from 'moment'
+
+Vue.prototype.$moment = moment;
 
 setAxios()
 Vue.config.productionTip = false;
@@ -20,7 +23,7 @@ Vue.use(ElementUI);
 Vue.use(mavonEditor)
 
 router.beforeEach((to,from,next)=>{
-  store.commit('setToken',Cookie.get('token'))
+  // store.commit('setToken',Cookie.get('token'))
   if(store.state.token){
     store.commit('changIsSignIn',1)
   }

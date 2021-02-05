@@ -49,10 +49,11 @@ const handBlogServer = (req, res) => {
     });
     // 接受参数
     req.on('end', function () {
-        req.body = JSON.stringify(req.body)
-        req.body = JSON.parse(req.body);
-        req.body = JSON.parse(req.body);
+        req.body = JSON.parse(JSON.stringify(req.body));
+        console.log(req.body,typeof req.body);
+        
         if (routeMethod === 'POST') {
+            req.body = JSON.parse(req.body);
             // 修改
             if (routeUrl === '/api/blog/update') {
                 updateBlog({
