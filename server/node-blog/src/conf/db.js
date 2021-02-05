@@ -5,7 +5,7 @@ let mysql_config = {};
 
 if (env === 'dev') {
     mysql_config = {
-        host: '192.168.1.170',
+        host: 'localhost',
         port: '3306',
         user: 'yc',
         password: '123qwe',
@@ -13,7 +13,7 @@ if (env === 'dev') {
     };
 } else if (env === 'production') {
     mysql_config = {
-        host: '192.168.1.170',
+        host: 'localhost',
         port: '3306',
         user: 'yc',
         password: '123qwe',
