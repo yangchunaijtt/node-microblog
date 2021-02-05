@@ -12,6 +12,12 @@ app.get('/api/blog/getList', function (req, res) {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     handBlogServer(req, res);
 })
+// 详情
+app.get('/api/blog/details', function (req, res) {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    handBlogServer(req, res);
+});
+
 app.post('/api/blog/update', function (req, res) {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     handBlogServer(req, res);
@@ -24,6 +30,7 @@ app.post('/api/blog/add', function (req, res) {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     handBlogServer(req, res);
 })
+
 
 //用户
 app.post('/api/user/login', function (req, res) {

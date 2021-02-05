@@ -2,6 +2,7 @@
 const url = require('url');
 const querystring = require('querystring');
 const {
+    getBlogDetails,
     getBlogList,
     updateBlog,
     deleteBlog,
@@ -14,52 +15,80 @@ const handBlogServer = (req, res) => {
     const routerAllUrl = req.url;
     const routeMethod = req.method;
     const routeUrl = routerAllUrl.split('?')[0];
-    console.log(routeUrl,routeMethod,routerAllUrl,req.body);
-    if (routeUrl === '/api/blog/getList') {
+
+    if (routeMethod === 'GET') {
         const params = url.parse(req.url, true).query;
-        getBlogList({
-            author: params.author ? params.author : '',
-            keyword: params.keyword ? params.keyword : ''
-        }).then(result => {
-            res.end(JSON.stringify(result))
-        }).catch(error => {
-            res.end(JSON.stringify(error))
-        })
+        if (routeUrl === '/api/blog/getList') {
+            getBlogList({
+                author: params.author ? params.author : '',
+                keyword: params.keyword ? params.keyword : ''
+            }).then(result => {
+                res.end(JSON.stringify(result))
+            }).catch(error => {
+                res.end(JSON.stringify(error))
+            })
+        }
+        //详情
+        if (routeUrl === '/api/blog/details') {
+            getBlogDetails({
+                id: params.id
+            }).then(result => {
+                res.end(JSON.stringify(result))
+            }).catch(error => {
+                res.end(JSON.stringify(error))
+            })
+        };
     }
 
     // post 请求部分
-    let post = '';
+    req.body = '';
+    req.createtime = Date.now();
     // 监听请求
     req.on('data', function (chunk) {
-        post += chunk;
+        req.body += chunk;
     });
     // 接受参数
     req.on('end', function () {
-        const postData = querystring.parse(post);
-        // 修改
-        if (routeUrl === '/api/blog/update') {
-            res.end(JSON.stringify(updateBlog({
-                id: postData.id,
-                title: postData.title,
-                content: postData.content,
-                createtime: postData.createtime,
-            })));
+        req.body = JSON.stringify(req.body)
+        req.body = JSON.parse(req.body);
+        req.body = JSON.parse(req.body);
+        if (routeMethod === 'POST') {
+            // 修改
+            if (routeUrl === '/api/blog/update') {
+                updateBlog({
+                    id: req.body.id,
+                    title: req.body.title,
+                    content: req.body.content,
+                }).then(result => {
+                    res.end(JSON.stringify(result))
+                }).catch(error => {
+                    res.end(JSON.stringify(error))
+                })
+            };
+            // 删除
+            if (routeUrl === '/api/blog/delete') {
+                deleteBlog({
+                    id: req.body.id
+                }).then(result => {
+                    res.end(JSON.stringify(result))
+                }).catch(error => {
+                    res.end(JSON.stringify(error))
+                })
+            }
+            // 新增
+            if (routeUrl === '/api/blog/add') {
+                addBlog({
+                    title: req.body.title,
+                    content: req.body.content,
+                    createtime: req.createtime,
+                    author: req.body.author
+                }).then(result => {
+                    res.end(JSON.stringify(result))
+                }).catch(error => {
+                    res.end(JSON.stringify(error))
+                })
+            };
         }
-        // 删除
-        if (routeUrl === '/api/blog/delete') {
-            res.end(JSON.stringify(deleteBlog({
-                id: postData.id
-            })))
-        }
-        // 新增
-        if (routeUrl === '/api/blog/add') {
-            res.end(JSON.stringify(addBlog({
-                id: postData.id,
-                title: postData.title,
-                content: postData.content,
-                createtime: postData.createtime,
-            })));
-        };
     });
 }
 
