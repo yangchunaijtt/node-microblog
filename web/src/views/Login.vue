@@ -103,9 +103,9 @@ export default {
           this.$axios.post("/api/user/login", this.loginForm).then((res) => {
             res = res.data;
             if (res.IsSuccess) {
-            //   Cookie.set("token", result.token);
-            //   this.$store.commit("setToken", result.token);
-            //   this.$store.commit("changIsSignIn", 1);
+              Cookie.set("token", result.token);
+              this.$store.commit("setToken", result.token);
+              this.$store.commit("changIsSignIn", 1);
               setTimeout(() => {
                 this.loading = false;
                 this.$router.push({ name: "home" });

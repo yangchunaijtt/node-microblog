@@ -23,7 +23,7 @@ Vue.use(ElementUI);
 Vue.use(mavonEditor)
 
 router.beforeEach((to,from,next)=>{
-  // store.commit('setToken',Cookie.get('token'))
+  store.commit('setToken',Cookie.get('token'))
   if(store.state.token){
     store.commit('changIsSignIn',1)
   }
