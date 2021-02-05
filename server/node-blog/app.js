@@ -40,5 +40,3 @@ app.post('/api/user/login', function (req, res) {
 
 
 console.log('server in localhost:8000');
-
-// 需要配置 cross-env  nodemon
