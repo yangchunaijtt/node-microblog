@@ -10,13 +10,17 @@ const login = ({ username, password,token }) => {
         mysqlFnc(sql).then(result => {
             console.log('login==', result);
             // 需要根据result值来判断是否成功
-            resolve(new successModel({
-                data: {token}
-            }));
+            if(result&& result.length){
+                resolve(new successModel({
+                    data: {token}
+                }));
+            }else {
+                reject(new errorModel({
+                    message: '账户或密码错误'
+                }))
+            }
         }).catch(error => {
-            reject(new errorModel({
-                data: error
-            }))
+            
         })
     })
 }

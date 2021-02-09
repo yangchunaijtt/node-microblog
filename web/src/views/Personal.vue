@@ -75,6 +75,7 @@
             },
             signOut() {
                 Cookie.remove('token')
+                this.$store.commit("setUsername", '');
                 this.$store.commit('setToken','')
                 this.$store.commit('changIsSignIn',0)
                 this.$router.push({name:'home'})

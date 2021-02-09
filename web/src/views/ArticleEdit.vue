@@ -60,7 +60,7 @@ export default {
           .post("/api/blog/add", {
             title: this.title,
             content: this.content,
-            author: "YC",
+            author: this.$store.state.username,
           })
           .then((res) => {
             res = res.data;

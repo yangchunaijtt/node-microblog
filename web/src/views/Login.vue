@@ -27,6 +27,8 @@
           >
         </el-form-item>
       </el-form>
+      <p>默认账户：admin</p><br/>
+      <p>默认密码：123qwe</p>
     </div>
     <div class="signUp" v-else>
       <el-form
@@ -38,14 +40,14 @@
       >
         <el-form-item prop="username">
           <el-input
-            v-model="regForm.username"
+            v-model.trim="regForm.username"
             placeholder="请输入账号"
           ></el-input>
         </el-form-item>
         <el-form-item prop="password">
           <el-input
             type="password"
-            v-model="regForm.password"
+            v-model.trim="regForm.password"
             placeholder="请输入密码"
           ></el-input>
         </el-form-item>
@@ -61,6 +63,7 @@
           >
         </el-form-item>
       </el-form>
+
       <span class="signText" @click="toSignIn">返回登录</span>
     </div>
     <div v-loading.fullscreen.lock="loading"></div>
@@ -75,8 +78,8 @@ export default {
       loading: false,
       status: 1,
       loginForm: {
-        username: "",
-        password: "",
+        username: "admin",
+        password: "123qwe",
       },
       loginRules: {
         username: [{ required: true, message: "请输入账号", trigger: "blur" }],
@@ -102,6 +105,7 @@ export default {
           this.$axios.post("/api/user/login", this.loginForm).then((res) => {
             res = res.data;
             if (res.IsSuccess) {
+              this.$store.commit("setUsername", this.loginForm.username);
               Cookie.set("token", res.data.token);
               this.$store.commit("setToken", res.data.token);
               this.$store.commit("changIsSignIn", 1);
@@ -110,6 +114,7 @@ export default {
                 this.$router.push({ name: "home" });
               }, 1500);
             } else {
+              this.loading = false;
               this.$message({
                 message: res.message,
                 center: true,

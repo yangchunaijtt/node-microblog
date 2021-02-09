@@ -3,7 +3,7 @@
         <div class="wrapper">
             <el-row>
                 <el-col :span="4">
-                    <div class="logo">YC博客</div>
+                    <div class="logo">{{$store.state.username}}博客</div>
                 </el-col>
                 <el-col :span="20">
                     <el-menu mode="horizontal" 

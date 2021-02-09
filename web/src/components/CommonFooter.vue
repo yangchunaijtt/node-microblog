@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <div class="wrapper">Copyright © YC</div>
+    <div class="wrapper">Copyright © {{$store.state.username}}博客</div>
   </footer>
 </template>
 
