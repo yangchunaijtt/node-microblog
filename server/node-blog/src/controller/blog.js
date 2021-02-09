@@ -20,7 +20,7 @@ const getBlogList = ({ author, keyWord }) => {
         }
         sql += `ORDER BY createtime DESC`;
         mysqlFnc(sql).then(result => {
-            console.log('getBlogList==', result);
+            // console.log('getBlogList==', result);
             // 需要根据result值来判断是否成功
             resolve(new successModel({
                 data: result

@@ -4,7 +4,7 @@
       <router-link :to="'/detail/' + item.id">
         <p class="title">{{ item.title }}</p>
       </router-link>
-      <p class="date">{{ item.createtime}}</p>
+      <p class="date">{{ item.createtime }}</p>
     </div>
   </div>
 </template>
@@ -24,9 +24,16 @@ export default {
           res = res.data;
           if (res.IsSuccess) {
             this.blogList = res.data;
-            this.blogList.forEach(item => {
-               item.createtime=  this.$moment(parseInt(item.createtime)).format('YYYY-MM-DD HH:SS')
-            })
+            this.blogList.forEach((item) => {
+              item.createtime = this.$moment(parseInt(item.createtime)).format(
+                "YYYY-MM-DD HH:SS"
+              );
+            });
+          } else {
+            this.$message({
+              message: res.message,
+              center: true,
+            });
           }
         })
         .catch((e) => {

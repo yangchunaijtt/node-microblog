@@ -1,8 +1,10 @@
 <template>
   <div class="wrapper">
     <h1 class="title">文章列表</h1>
+
     <div class="article">
       <el-button class="addBtn" @click="handleAdd">新增+</el-button>
+      <el-button @click="signOut" type="danger">退出登录</el-button>
       <el-table :data="articleList" border stripe>
         <el-table-column prop="title" label="标题" width="180">
         </el-table-column>
@@ -34,6 +36,8 @@
 </template>
 
 <script>
+import Cookie from "js-cookie";
+
 export default {
   data() {
     return {
@@ -51,6 +55,12 @@ export default {
     handleEdit(row) {
       let id = row.id;
       this.$router.push({ path: `/article/edit/${id}` });
+    },
+    signOut() {
+      Cookie.remove("token");
+      this.$store.commit("setToken", "");
+      this.$store.commit("changIsSignIn", 0);
+      this.$router.push({ name: "home" });
     },
     handleDelect(row) {
       this.$confirm("此操作将删除该文章, 是否继续?", "提示", {
@@ -76,8 +86,8 @@ export default {
                 }, 1500);
               } else {
                 this.$message({
-                  type: "error",
-                  message: `${row.title} 文章删除失败!`,
+                  message: res.message,
+                  center: true,
                 });
               }
             })
@@ -108,6 +118,11 @@ export default {
               item.createtime = this.$moment(parseInt(item.createtime)).format(
                 "YYYY-MM-DD HH:SS"
               );
+            });
+          }else {
+            this.$message({
+              message: res.message,
+              center: true,
             });
           }
         })

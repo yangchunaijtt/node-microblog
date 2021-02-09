@@ -45,6 +45,11 @@ export default {
               setTimeout(() => {
                 this.$router.push({ name: "article" });
               }, 1500);
+            } else {
+              this.$message({
+                message: res.message,
+                center: true,
+              });
             }
           })
           .catch((e) => {
@@ -67,6 +72,11 @@ export default {
               setTimeout(() => {
                 this.$router.push({ name: "article" });
               }, 1500);
+            } else {
+              this.$message({
+                message: res.message,
+                center: true,
+              });
             }
           })
           .catch((e) => {
@@ -87,6 +97,11 @@ export default {
             let blogList = res.data[0];
             this.title = blogList.title;
             this.content = blogList.content;
+          } else {
+            this.$message({
+              message: res.message,
+              center: true,
+            });
           }
         })
         .catch((e) => {

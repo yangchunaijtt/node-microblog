@@ -13,6 +13,10 @@ app.get('/api/blog/getList', function (req, res) {
     handBlogServer(req, res);
 })
 // 详情
+// app.get('/api/blog/details', function (req, res) {
+//     res.writeHead(200, { 'Content-Type': 'application/json' });
+//     handBlogServer(req, res);
+// });
 app.get('/api/blog/details', function (req, res) {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     handBlogServer(req, res);
@@ -40,3 +44,6 @@ app.post('/api/user/login', function (req, res) {
 
 
 console.log('server in localhost:8000');
+//  登录设置
+// redis 设置cookie session 完成登录设置
+// nginx反向代理

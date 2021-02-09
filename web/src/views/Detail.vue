@@ -1,31 +1,34 @@
 <template>
   <div class="blog-content-box">
     <div class="wrapper">
-      <h1 class="title">{{blogDetail.title}}</h1>
+      <h1 class="title">{{ blogDetail.title }}</h1>
       <div class="time">
-        <span class="date"><i class="iconfont icon-date"></i>{{blogDetail.create_time}}</span>
+        <span class="date"
+          ><i class="iconfont icon-date"></i>{{ blogDetail.create_time }}</span
+        >
       </div>
       <div class="detail">
-        <mavon-editor v-model="blogDetail.content"
-            defaultOpen="preview"
-            :toolbarsFlag="false"
-            :subfield="false"/>
+        <mavon-editor
+          v-model="blogDetail.content"
+          defaultOpen="preview"
+          :toolbarsFlag="false"
+          :subfield="false"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  
-  export default {
-    data() {
-      return {
-        blogDetail:{}
-      }
-    },
-    methods:{
-      getDetail() {
-        this.$axios
+export default {
+  data() {
+    return {
+      blogDetail: {},
+    };
+  },
+  methods: {
+    getDetail() {
+      this.$axios
         .get("/api/blog/details", {
           params: {
             id: this.$route.params.id,
@@ -38,17 +41,22 @@
             this.blogDetailcreatetime = this.$moment(
               parseInt(this.blogDetail.createtime)
             ).format("YYYY-MM-DD HH:SS");
+          } else {
+            this.$message({
+              message: res.message,
+              center: true,
+            });
           }
         })
         .catch((e) => {
           console.log(e);
-        })
-      }
+        });
     },
-    created() {
-      this.getDetail()
-    },
-  }
+  },
+  created() {
+    this.getDetail();
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -58,7 +66,8 @@
 .wrapper {
   padding: 20px;
   background: #f8f8fd;
-  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 30px rgba(10, 10, 0, 0.1) inset;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(10, 10, 0, 0.1) inset;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 30px rgba(10, 10, 0, 0.1) inset;
   .title {
     text-align: center;
@@ -77,5 +86,4 @@
     }
   }
 }
-
 </style>

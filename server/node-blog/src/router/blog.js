@@ -8,17 +8,34 @@ const {
     deleteBlog,
     addBlog
 } = require('../controller/blog');
-
+const { successModel, errorModel } = require('../model/resModel');
+const { get, set } = require('../db/redis');
 // details
 
-const handBlogServer = (req, res) => {
+const handBlogServer = async (req, res) => {
     const routerAllUrl = req.url;
     const routeMethod = req.method;
     const routeUrl = routerAllUrl.split('?')[0];
 
+    let token = req.cookie.token;
+    if (!token) {
+        res.end(JSON.stringify(new errorModel({
+            message: '未登录，请先登录'
+        })));
+        return
+    }
+    const getResult = await get(token);
+    if (!getResult) {
+        res.end(JSON.stringify(new errorModel({
+            message: '未登录，请先登录'
+        })));
+        return
+    }
     if (routeMethod === 'GET') {
+
         const params = url.parse(req.url, true).query;
         if (routeUrl === '/api/blog/getList') {
+
             getBlogList({
                 author: params.author ? params.author : '',
                 keyword: params.keyword ? params.keyword : ''
@@ -30,6 +47,7 @@ const handBlogServer = (req, res) => {
         }
         //详情
         if (routeUrl === '/api/blog/details') {
+
             getBlogDetails({
                 id: params.id
             }).then(result => {
@@ -38,6 +56,7 @@ const handBlogServer = (req, res) => {
                 res.end(JSON.stringify(error))
             })
         };
+
     }
 
     // post 请求部分
@@ -50,10 +69,10 @@ const handBlogServer = (req, res) => {
     // 接受参数
     req.on('end', function () {
         req.body = JSON.parse(JSON.stringify(req.body));
-        console.log(req.body,typeof req.body);
-        
+        console.log(req.body, typeof req.body);
         if (routeMethod === 'POST') {
             req.body = JSON.parse(req.body);
+
             // 修改
             if (routeUrl === '/api/blog/update') {
                 updateBlog({

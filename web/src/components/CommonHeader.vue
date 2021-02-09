@@ -46,25 +46,12 @@
             hanleSelect(index) {
                 this.activeIndex = index
             },
-            getUserInfo() {
-                this.$axios.get('/api/user/info').then((res)=>{
-                    let result = res.data
-                    if(result.code === 0){
-                        this.userinfo = result.data
-                    }
-                }).catch(e=>{
-                    console.log(e)
-                })
-            }
         },
         computed: {
             isSignIn() {
                 return this.$store.state.isSignIn
             }
-        },
-        created() {
-            this.getUserInfo()
-        },
+        }
     }
 </script>
 

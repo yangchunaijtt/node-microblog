@@ -27,7 +27,6 @@
           >
         </el-form-item>
       </el-form>
-      <span class="signText" @click="toSignUp">注册新账号</span>
     </div>
     <div class="signUp" v-else>
       <el-form
@@ -103,13 +102,18 @@ export default {
           this.$axios.post("/api/user/login", this.loginForm).then((res) => {
             res = res.data;
             if (res.IsSuccess) {
-              Cookie.set("token", result.token);
-              this.$store.commit("setToken", result.token);
+              Cookie.set("token", res.data.token);
+              this.$store.commit("setToken", res.data.token);
               this.$store.commit("changIsSignIn", 1);
               setTimeout(() => {
                 this.loading = false;
                 this.$router.push({ name: "home" });
               }, 1500);
+            } else {
+              this.$message({
+                message: res.message,
+                center: true,
+              });
             }
           });
         } else {

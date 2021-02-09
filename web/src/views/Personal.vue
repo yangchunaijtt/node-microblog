@@ -73,21 +73,6 @@
                 }
                 return isJPG && isLt2M;
             },
-            getUserInfo(){
-                this.$axios.get('/api/user/info').then((res)=>{
-                    let result = res.data
-                    if(result.code === 0){
-                        this.form.nickname = result.data.nickname
-                        if(result.data.head_img === '' || result.data.head_img === null){
-                            this.imageUrl = null
-                        }else{
-                            this.imageUrl = result.data.head_img
-                        }
-                    }
-                }).catch(e=>{
-                    console.log(e)
-                })
-            },
             signOut() {
                 Cookie.remove('token')
                 this.$store.commit('setToken','')
@@ -95,10 +80,6 @@
                 this.$router.push({name:'home'})
             }
         },
-        created () {
-            this.getUserInfo()
-        }
-
     }    
 
 </script>
