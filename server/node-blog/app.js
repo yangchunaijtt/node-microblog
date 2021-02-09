@@ -7,6 +7,7 @@ const handleUserServer = require('./src/router/user');
 //注册web服务
 http.createServer(app).listen(8000);
 
+
 //博客
 app.get('/api/blog/getList', function (req, res) {
     res.writeHead(200, { 'Content-Type': 'application/json' });

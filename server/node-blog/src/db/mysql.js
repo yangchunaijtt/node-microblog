@@ -8,7 +8,6 @@ const mysqlFnc = (sql) => {
         const client = mysql.createConnection(mysql_config);
         client.connect();
         client.query(sql, (err, result) => {
-            console.log('sql==', sql);
             if (err) {
                 reject(err);
             }

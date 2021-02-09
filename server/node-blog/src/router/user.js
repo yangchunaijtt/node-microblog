@@ -8,7 +8,6 @@ const { get, set } = require('../db/redis');
 const handleUserServer = (req, res) => {
     const routerAllUrl = req.url;
     const routeUrl = routerAllUrl.split('?')[0];
-    console.log(routeUrl);
     const routeMethod = req.method;
     // post 请求部分
     req.body = '';
@@ -20,7 +19,6 @@ const handleUserServer = (req, res) => {
     req.on('end', function () {
         // 登录
         req.body = JSON.parse(JSON.stringify(req.body));
-        console.log(req.body, typeof req.body)
         if (routeMethod === 'POST') {
             req.body = JSON.parse(req.body);
             if (routeUrl === '/api/user/login') {
