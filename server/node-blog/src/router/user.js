@@ -13,12 +13,11 @@ const handleUserServer = (req, res) => {
     req.body = '';
     // 监听请求
     req.on('data', function (chunk) {
-        req.body += chunk;
+        req.body += chunk.toString();
     });
     // 接受参数
     req.on('end', function () {
         // 登录
-        req.body = JSON.parse(JSON.stringify(req.body));
         if (routeMethod === 'POST') {
             req.body = JSON.parse(req.body);
             if (routeUrl === '/api/user/login') {

@@ -64,14 +64,13 @@ const handBlogServer = async (req, res) => {
     req.createtime = Date.now();
     // 监听请求
     req.on('data', function (chunk) {
-        req.body += chunk;
+        req.body += chunk.toString();
     });
     // 接受参数
     req.on('end', function () {
-        req.body = JSON.parse(JSON.stringify(req.body));
         if (routeMethod === 'POST') {
             req.body = JSON.parse(req.body);
-
+            
             // 修改
             if (routeUrl === '/api/blog/update') {
                 updateBlog({
