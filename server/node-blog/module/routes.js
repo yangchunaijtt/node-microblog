@@ -1,5 +1,5 @@
 const url = require('url');
-const { successModel, errorModel } = require('../src/model/resModel');
+
 const { accessWriteLog } = require('../src/utils/log')
 
 let G = {

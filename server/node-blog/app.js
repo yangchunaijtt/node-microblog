@@ -14,10 +14,6 @@ app.get('/api/blog/getList', function (req, res) {
     handBlogServer(req, res);
 })
 // 详情
-// app.get('/api/blog/details', function (req, res) {
-//     res.writeHead(200, { 'Content-Type': 'application/json' });
-//     handBlogServer(req, res);
-// });
 app.get('/api/blog/details', function (req, res) {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     handBlogServer(req, res);
