@@ -1,6 +1,7 @@
 // 处理后台接口数据的地方
 const { successModel, errorModel } = require('../model/resModel');
-const mysqlFnc = require('../db/mysql');
+const { mysqlFnc, escape } = require('../db/mysql');
+const xss = require('xss');
 /**
  * 获取
  * @param {*} author 作者
@@ -11,12 +12,15 @@ const tableName = 'blogs';
 
 const getBlogList = ({ author, keyWord }) => {
     return new Promise((resolve, reject) => {
+
         let sql = `SELECT * FROM ${tableName} WHERE 1=1 `
         if (author) {
-            sql += `AND author LIKE '%${author}%'`
+            author = escape(author);
+            sql += `AND author=${author}`
         }
         if (keyWord) {
-            sql += `AND title LIKE '%${keyWord}%'`
+            author = escape(keyWord);
+            sql += `AND title=${keyWord}`
         }
         sql += `ORDER BY createtime DESC`;
         mysqlFnc(sql).then(result => {
@@ -58,13 +62,21 @@ const updateBlog = ({ id, title, content }) => {
     return new Promise((resolve, reject) => {
         let sql = `UPDATE ${tableName} `
         if (title && content) {
-            sql += `SET title="${title}",content="${content}"`
+            title = xss(title);
+            content = xss(content);
+            title = escape(title);
+            content = escape(content);
+            sql += `SET title=${title},content=${content}`
         } else {
             if (title) {
-                sql += `SET title="${title}"`;
+                title = xss(title);
+                title = escape(title);
+                sql += `SET title=${title}`;
             };
             if (content) {
-                sql += `SET content="${content}"`;
+                content = xss(content);
+                content = escape(content);
+                sql += `SET content=${content}`;
             };
         }
         sql += ` WHERE id=${id};`
@@ -105,7 +117,13 @@ const deleteBlog = ({ id }) => {
 // 新增
 const addBlog = ({ title, content, createtime, author }) => {
     return new Promise((resolve, reject) => {
-        let sql = `INSERT INTO ${tableName}(title,content,createtime,author) VALUES("${title}","${content}",${createtime},"${author}");`
+        title = xss(title);
+        content = xss(content);
+        author = xss(author);
+        title = escape(title);
+        content = escape(content);
+        author = escape(author);
+        let sql = `INSERT INTO ${tableName}(title,content,createtime,author) VALUES(${title},${content},${createtime},${author});`
         // INSERT INTO blogs(title,content,createtime,author) VALUES('测试文章一','dsadsadsad',1612511309896,'王二麻子');
         mysqlFnc(sql).then(result => {
             // 需要根据result值来判断是否成功

@@ -45,6 +45,5 @@ app.post('/api/user/login', function (req, res) {
 
 
 console.log('server in localhost:8000');
-//  登录设置
-// redis 设置cookie session 完成登录设置
+
 // nginx反向代理

@@ -19,4 +19,11 @@ const mysqlFnc = (sql) => {
     })
 }
 
-module.exports = mysqlFnc;
+const escape = (value) => {
+    return mysql.escape(value)
+}
+
+module.exports = {
+    mysqlFnc,
+    escape
+};

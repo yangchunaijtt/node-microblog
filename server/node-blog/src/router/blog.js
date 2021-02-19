@@ -18,6 +18,7 @@ const handBlogServer = async (req, res) => {
     const routeUrl = routerAllUrl.split('?')[0];
 
     let token = req.cookie.token;
+    
     if (!token) {
         res.end(JSON.stringify(new errorModel({
             message: '未登录，请先登录'
