@@ -59,6 +59,7 @@ export default {
     signOut() {
       Cookie.remove("token");
       this.$store.commit("setUsername", '');
+      Cookie.set("user_name", 'Yc');
       this.$store.commit("setToken", "");
       this.$store.commit("changIsSignIn", 0);
       this.$router.push({ name: "home" });
@@ -104,11 +105,13 @@ export default {
         });
     },
     getMyBlogList() {
-      console.log(this.$store.state.username)
+     
+      const user_name =Cookie.get('user_name');
+       console.log(user_name)
       this.$axios
         .get("/api/blog/getList", {
           params: {
-            author: this.$store.state.username,
+            author:user_name? user_name:this.$store.state.username,
           },
         })
         .then((res) => {

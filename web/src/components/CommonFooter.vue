@@ -1,11 +1,24 @@
 <template>
   <footer class="footer">
-    <div class="wrapper">Copyright © {{$store.state.username}}博客</div>
+    <div class="wrapper">Copyright © {{ username }}博客</div>
   </footer>
 </template>
 
 <script>
-export default {};
+import Cookie from "js-cookie";
+
+export default {
+  computed: {
+    username() {
+      let username = "";
+      const user_name = Cookie.get("user_name");
+      user_name
+        ? (username = user_name)
+        : (username = this.$store.state.username);
+      return username;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

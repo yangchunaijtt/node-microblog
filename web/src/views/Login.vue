@@ -106,6 +106,7 @@ export default {
             res = res.data;
             if (res.IsSuccess) {
               this.$store.commit("setUsername", this.loginForm.username);
+              Cookie.set("user_name", this.loginForm.username);
               Cookie.set("token", res.data.token);
               this.$store.commit("setToken", res.data.token);
               this.$store.commit("changIsSignIn", 1);

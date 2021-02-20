@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import Cookie from 'js-cookie'
+
 export default {
   data() {
     return {
@@ -56,11 +58,12 @@ export default {
             console.log(e);
           });
       } else {
+        const user_name =Cookie.get('user_name');
         this.$axios
           .post("/api/blog/add", {
             title: this.title,
             content: this.content,
-            author: this.$store.state.username,
+            author: user_name?user_name:this.$store.state.username,
           })
           .then((res) => {
             res = res.data;
