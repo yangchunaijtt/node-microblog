@@ -9,7 +9,7 @@ let G = {
 let app = (req, res) => {
     // 写入日志
     const logStr = `${req.method} -- ${req.url} -- ${req.headers['user-agent']} -- ${Date.now()}`;
-    accessWriteLog(logStr);
+    // accessWriteLog(logStr);
     // 解析cookie
     req.cookie = {};
     const cookieStr = req.headers.cookie;

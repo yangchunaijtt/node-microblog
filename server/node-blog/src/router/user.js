@@ -27,10 +27,10 @@ const handleUserServer = (req, res) => {
                     token = `${Date.now()}_${Math.random() * 100000}`;
                 };
                 set(token, {})
-                // get(token).then(res => {
-                //     // req.session = res;
-                //     console.log('redis=====', res)
-                // });
+                get(token).then(res => {
+                    req.session = res;
+                    console.log('redis=====', res)
+                });
                 login({
                     username: req.body.username,
                     password: req.body.password,
